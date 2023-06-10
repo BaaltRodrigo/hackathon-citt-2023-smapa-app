@@ -1,6 +1,11 @@
 <template>
-  <v-container>
-    <v-card title="Aceptar Invitacion">
+  <v-container class="mt-16 d-flex justify-center">
+    <v-card
+      variant="outlined"
+      class="rounded-lg"
+      width="400"
+      title="Aceptar Invitacion"
+    >
       <v-card-text v-if="invitation.email">
         <v-form>
           <v-text-field
@@ -11,7 +16,15 @@
           ></v-text-field>
           <v-text-field v-model="password" label="Password"></v-text-field>
         </v-form>
-        <v-btn @click="submitForm">Crear e ingresar</v-btn>
+        <v-btn
+          block
+          size="large"
+          class="rounded-lg"
+          color="success"
+          @click="submitForm"
+        >
+          Crear e ingresar
+        </v-btn>
       </v-card-text>
       <v-card-text v-else> No se pudo encontrar la invitacion </v-card-text>
     </v-card>
@@ -38,13 +51,14 @@ export default {
     ...mapActions(["fetchInvitation"]),
     ...mapActions("auth", ["registration"]),
     async submitForm() {
-      this.registration({
+      await this.registration({
         email: this.invitation.email,
         password: this.password,
       });
 
       if (this.user) {
-        this.$router.push({ name: "Home" });
+        console.log("user created");
+        this.$router.push("/");
       }
     },
   },
