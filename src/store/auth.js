@@ -1,6 +1,9 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, addDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 const state = {
   user: null,
@@ -27,32 +30,31 @@ const actions = {
     // dispatch("updateUserToFirebase", user);
   },
 
+  async registration({ rootState, commit, dispatch }, { email, password }) {
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    const token = await user.user.getIdToken();
+    commit("setUser", user);
+    commit("setToken", token);
+    const { invitation } = rootState;
+    // console.log(invitation);
+    dispatch("updateUserToFirebase", {
+      email: invitation.email,
+      invitation: invitation.id,
+      institution: invitation.institution,
+    });
+  },
+
   /**
    * As soon as the user is logged in, we need to update the user in the database
    * In the case that the user is a new user, we create a new user instead
    * of update an existing one.
    */
   async updateUserToFirebase({ state }, user) {
-    const userRef = doc(db, state.collection, user.uid); // This may be null
-    const userDoc = await getDoc(userRef);
-
-    // No user, create a new one
-    if (!userDoc.exists()) {
-      await setDoc(userRef, {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        // photoURL: user.photoURL // This is not available for all providers
-      });
-    } else {
-      // The user exists, update it
-      // Email will never be updated
-      await updateDoc(userRef, {
-        displayName: user.displayName,
-      });
-    }
-
     console.log(user);
+    const userRef = collection(db, "users"); // This may be null
+    const userDoc = await addDoc(userRef, user);
+
+    // console.log(user);
   },
 };
 

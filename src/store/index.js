@@ -1,6 +1,6 @@
 import {
   collection,
-  getDocs,
+  getDoc,
   addDoc,
   doc,
   serverTimestamp,
@@ -13,12 +13,17 @@ import AuthModule from "./auth";
 
 const state = {
   location: {},
+  invitation: {},
 };
 
 const mutations = {
   setLocation(state, payload) {
     const { latitude, longitude } = payload.coords;
     state.location = { latitude, longitude };
+  },
+
+  setInvitation(state, payload) {
+    state.invitation = payload;
   },
 };
 
@@ -31,6 +36,25 @@ const actions = {
 
     // Commit location to state
     commit("setLocation", location);
+  },
+
+  async fetchInvitation({ commit }, payload) {
+    // get invitation reference
+    const invitationRef = doc(db, "invitations", payload);
+
+    // get invitation document
+    const invitationSnapshot = await getDoc(invitationRef);
+
+    if (!invitationSnapshot.exists()) {
+      console.log("invitation does not exist");
+      return;
+    }
+
+    // save invitation values to state
+    commit("setInvitation", {
+      ...invitationSnapshot.data(),
+      id: invitationSnapshot.id,
+    });
   },
 
   async sendInvitation({ state }, payload) {
@@ -50,6 +74,12 @@ const actions = {
 
     // send invitation via email
     if (invitation) {
+      // get invitation id
+      // const { id } = invitation;
+      // transport.sendMail({
+      //   ...mailOptions,
+      //   html: `<a href="http://localhost:8080/invitation/${id}">Haz click aqui para aceptar la invitacion</a>`,
+      // });
       console.log("invitation sent");
     }
   },
