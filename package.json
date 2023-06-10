@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "@vue-leaflet/vue-leaflet": "^0.9.0",
+    "leaflet": "^1.9.4",
     "roboto-fontface": "*",
     "vue": "^3.2.47",
     "vue-router": "^4.2.2",
