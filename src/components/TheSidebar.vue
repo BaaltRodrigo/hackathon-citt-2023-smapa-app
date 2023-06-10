@@ -2,12 +2,16 @@
   <v-navigation-drawer app permanent rail>
     <v-list density="compact" nav>
       <v-list-item
-        prepend-icon="mdi-view-dashboard"
+        prepend-icon="mdi-account-plus"
         value="dashboard"
       ></v-list-item>
-
-      <v-list-item prepend-icon="mdi-forum" value="messages"></v-list-item>
     </v-list>
+
+    <template #append>
+      <v-list density="compact" nav>
+        <v-list-item prepend-icon="mdi-logout" value="messages"></v-list-item>
+      </v-list>
+    </template>
   </v-navigation-drawer>
 </template>
 
