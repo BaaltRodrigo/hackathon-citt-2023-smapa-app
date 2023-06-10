@@ -1,3 +1,12 @@
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
+
 import { createStore } from "vuex";
 import HydrantsModule from "./hydrants";
 // import AuthModule from "./auth";
@@ -22,6 +31,27 @@ const actions = {
 
     // Commit location to state
     commit("setLocation", location);
+  },
+
+  async sendInvitation({ state }, payload) {
+    // get invitations reference
+    console.log("entered invitation");
+
+    const invitationsRef = collection(db, "invitations");
+
+    // add new invitation document
+    console.log("saving invitation");
+
+    const invitation = await addDoc(invitationsRef, {
+      ...payload,
+      used: false,
+      created_at: serverTimestamp(),
+    });
+
+    // send invitation via email
+    if (invitation) {
+      console.log("invitation sent");
+    }
   },
 };
 

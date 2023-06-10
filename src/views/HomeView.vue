@@ -5,7 +5,7 @@
   <v-dialog v-model="showInvitation" min-width="340px" width="120px">
     <v-card variant="outlined" class="bg-white rounded-lg">
       <v-card-text>
-        <invitation-form />
+        <invitation-form @close="showInvitation = false" />
       </v-card-text>
     </v-card>
   </v-dialog>
