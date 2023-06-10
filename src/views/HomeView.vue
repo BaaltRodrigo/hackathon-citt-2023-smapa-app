@@ -12,6 +12,10 @@
 
   <v-dialog v-model="showHydrantForm" min-width="340px" width="120px">
     <v-card variant="outlined" class="bg-white rounded-lg">
+      <v-card-text v-if="!!hydrant">
+        <p><b>Lat: </b>{{ hydrant.coordinates.long }}</p>
+        <p><b>Lng: </b>{{ hydrant.coordinates.lat }}</p>
+      </v-card-text>
       <v-card-text>
         <hydrant-form @close="showHydrantForm = false" />
       </v-card-text>
