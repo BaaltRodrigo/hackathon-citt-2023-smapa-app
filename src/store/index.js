@@ -9,7 +9,7 @@ import { db } from "../config/firebase";
 
 import { createStore } from "vuex";
 import HydrantsModule from "./hydrants";
-// import AuthModule from "./auth";
+import AuthModule from "./auth";
 
 const state = {
   location: {},
@@ -61,5 +61,6 @@ export default createStore({
   actions,
   modules: {
     hydrants: HydrantsModule,
+    auth: AuthModule,
   },
 });
