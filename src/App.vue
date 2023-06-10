@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
@@ -19,5 +20,16 @@ export default {
   data: () => ({
     //
   }),
+
+  methods: {
+    ...mapActions(["fetchLocation"]),
+  },
+
+  async mounted() {
+    // fetch location from browser
+    await this.fetchLocation();
+
+    // fetch hydrants from firebase
+  },
 };
 </script>
