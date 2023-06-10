@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import HydrantsModule from "./hydrants";
 // import AuthModule from "./auth";
 
 const state = {
@@ -29,6 +30,6 @@ export default createStore({
   mutations,
   actions,
   modules: {
-    // auth: AuthModule,
+    hydrants: HydrantsModule,
   },
 });

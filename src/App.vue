@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <the-sidebar />
     <v-main>
       <router-view />
     </v-main>
@@ -9,7 +8,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import TheSidebar from "./components/TheSidebar.vue";
 import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
@@ -17,7 +15,6 @@ export default {
 
   components: {
     HelloWorld,
-    TheSidebar,
   },
 
   data: () => ({
