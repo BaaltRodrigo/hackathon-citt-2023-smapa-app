@@ -1,5 +1,15 @@
 <template>
-  <v-container>
-    <v-card title="Home view"></v-card>
-  </v-container>
+  <smapa-map />
 </template>
+
+<script>
+import SmapaMap from "../components/SmapaMap.vue";
+
+export default {
+  name: "HomeView",
+
+  components: {
+    SmapaMap,
+  },
+};
+</script>
